@@ -784,7 +784,7 @@ class LocalUpdate(object):
             batch_loss = []
             batch_y_test = []
             batch_pred_test = []
-            for X, y in self.ldr_val:
+            for X, y in self.ldr_train:
                 net.eval()
                 hidden_1 = repackage_hidden(hidden_1)
                 hidden_2 = repackage_hidden(hidden_2)
@@ -819,6 +819,9 @@ def compute_cluster_id(cluster_models, client_dataset, args, idxs_users):
     cluster_id = {}
     for cluster in range(args.cluster):
         cluster_id[cluster] = []
+
+    # cluster_id[cluster] = [0]
+    # return cluster_id
     
     client_lst = [c for c in idxs_users]
     i = 0
@@ -877,6 +880,10 @@ def cluster_id_property(cluster_models, client_dataset, args, idxs_users):
     cluster_id = {}
     for cluster in range(args.cluster):
         cluster_id[cluster] = []
+    
+    cluster_id[cluster] = [0]
+    return cluster_id
+
     
     client_lst = [c for c in idxs_users]
     i = 0
@@ -1058,10 +1065,10 @@ class LocalUpdateProp(object):
 
         if net.model_type == 'transformer':
             if rho == True:
-                net, ep_ls, ep_cons_ls, ep_rho= transformer_prop_test(self.ldr_val, net, self.args, self.loss_func, rho=True)
+                net, ep_ls, ep_cons_ls, ep_rho= transformer_prop_test(self.ldr_train, net, self.args, self.loss_func, rho=True)
                 return ep_ls, ep_cons_ls, self.idxs, ep_rho
             else:
-                net, ep_ls, ep_cons_ls = transformer_prop_test(self.ldr_val, net, self.args, self.loss_func, rho=False)
+                net, ep_ls, ep_cons_ls = transformer_prop_test(self.ldr_train, net, self.args, self.loss_func, rho=False)
                 return net.state_dict(), ep_ls, ep_cons_ls, self.idxs
 
         else:
@@ -1074,7 +1081,7 @@ class LocalUpdateProp(object):
             batch_loss = []
             batch_cons_loss = []
             
-            for X, y in self.ldr_val:
+            for X, y in self.ldr_train:
                 net.eval()
                 hidden_1 = repackage_hidden(hidden_1)
                 hidden_2 = repackage_hidden(hidden_2)

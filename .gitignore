@@ -1,6 +1,7 @@
 __pycache__/
 data_example/
 telex/__pycache__/
+telex/
 utils/__pycache__/
 log/
 SUMO_log/

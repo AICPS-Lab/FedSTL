@@ -16,15 +16,15 @@ import copy
 from tqdm import tqdm
 from options import args_parser
 import random
-random.seed(0)
-np.random.seed(0)
-torch.manual_seed(0)
-torch.cuda.manual_seed_all(0)
+random.seed(10)
+np.random.seed(10)
+torch.manual_seed(10)
+torch.cuda.manual_seed_all(10)
 
 import matplotlib.pyplot as plt
 
 ## save results to txt log file.
-stdoutOrigin=sys.stdout 
+# stdoutOrigin=sys.stdout 
 
 
 
@@ -42,7 +42,7 @@ def get_dict_keys(cluster_id, idxs_users):
 def main():
     args = args_parser()
     args.device = get_device()
-    sys.stdout = open("log/IFCA"+str(args.model)+".txt", "a")
+    # sys.stdout = open("log/IFCA"+str(args.model)+".txt", "a")
     
     client_dataset = {}
     for c in range(args.client):
@@ -191,5 +191,5 @@ if __name__ == '__main__':
     
     finally:
         print('\nDone.')
-        sys.stdout.close()
-        sys.stdout=stdoutOrigin
+        # sys.stdout.close()
+        # sys.stdout=stdoutOrigin

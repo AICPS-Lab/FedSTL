@@ -109,8 +109,8 @@ def get_client_dataset(client_id, dataset_name):
     test_dataset = SequenceDataset(dataset_array["test_x"], dataset_array["test_y"])
     dataset_len = [len(train_dataset), len(val_dataset), len(test_dataset)]
     train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, drop_last=True)
-    val_loader = DataLoader(val_dataset, batch_size=64, drop_last=True)
-    test_loader = DataLoader(test_dataset, batch_size=64, drop_last=True)
+    val_loader = DataLoader(val_dataset, batch_size=5, drop_last=True)
+    test_loader = DataLoader(test_dataset, batch_size=5, drop_last=True)
 
     return train_loader, val_loader, test_loader, dataset_len
 
@@ -121,6 +121,7 @@ def get_shared_dataset(client_id, dataset_name):
     Getting client and shared dataset files by dataset name. 
     Training data is seperated to a small shared group and a large private group.
     """
+    client_id = 6
     dataset_array = {}
     if dataset_name == 'fhwa':
         dataset_path = "/hdd/FHWA_dataset/torch_dataset/"
